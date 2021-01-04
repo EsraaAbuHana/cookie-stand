@@ -1,81 +1,59 @@
-var seattleobject = {location :'Seattle', 'min-cast' : 23,
-'max-cust':65,'Avg Cookie /Sales':6.3,getRandomInt :function () {
-    let min = Math.ceil(this['min-cast']);
-    let max = Math.floor(this['max-cust']);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-  }
-   ,avgrandom : function (){
-      return this["Avg Cookie /Sales"]*this.getRandomInt() ;
-  } 
+function Store(location, min, max, avg) {
+  this.location = location;
+  this.minvalue = min;
+  this.maxvalue = max;
+  this.avgvalue = avg;
 }
-console.log(seattleobject);
-var tokyoobject = {location :'Tokyo', 'min-cast' : 3,
-'max-cust':24,'Avg Cookie /Sales':1.2,getRandomInt :function () {
-    let min = Math.ceil(this['min-cast']);
-    let max = Math.floor(this['max-cust']);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-  }
-  ,avgrandom : function (){
-    return this["Avg Cookie /Sales"]*this.getRandomInt() ;
-}
-}
-var dubaieobject = {location :'Dubai', 'min-cast' : 38,
-'max-cust':11,'Avg Cookie /Sales':3.7,getRandomInt :function () {
-    let min = Math.ceil(this['min-cast']);
-    let max = Math.floor(this['max-cust']);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-  }
-  ,avgrandom : function (){
-    return this["Avg Cookie /Sales"]*this.getRandomInt() ;
-}
-}
-var parisobject = {location :'Paris', 'min-cast' : 20,
-'max-cust':38,'Avg Cookie /Sales':2.3,getRandomInt () {
-    let min = Math.ceil(this['min-cast']);
-    let max = Math.floor(this['max-cust']);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
-  }
-  ,avgrandom : function (){
-    return this["Avg Cookie /Sales"]*this.getRandomInt() ;
+///this.propyrti=passed value
+// Store.prototype.cookiesLesTable = function () {
+//   var salestable = document.createElement('list');
+//   parentElement.appendChild(list);
+//   var city = document.createElement('h4');
+//   city.textContent = this.location;
+//   list.appendChild(city);
+// }
+Store.prototype.avgRandom = function () {
+  return Math.floor(this.avgvalue * (Math.floor(Math.random() * (this.maxvalue - this.minvalue) + this.minvalue)));
 }
 
+var seattle = new Store('Seattle', 23, 65, 6.3);
+var tokyoo = new Store('Tokyoo', 3, 24, 1.2);
+var dubai = new Store('Dubai', 38, 11, 3.7);
+var lima = new Store('Lima', 2, 16, 4.6);
+var paris = new Store('Paris', 20, 38, 2.3);
+console.log(seattle);
+console.log(seattle.avgvalue);
+console.log(tokyoo.avgvalue);
+var avgarray = [seattle.avgRandom(), tokyoo.avgRandom(), dubai.avgRandom(), lima.avgRandom(), paris.avgRandom()];
+console.log(avgarray);
+var citynamearray = ['Seattle', 'Tokyoo', 'Dubai', 'Lima', 'Paris', 'Totals'];
+console.log(seattle.avgRandom());
+seattle.avgRandom();
+var hourarray = ['6 AM : ', '7 AM :', '8 AM : ', '9 AM : ', '10 AM : ', '11 AM : ', '12 PM : ', '1 PM : ', '2 PM : ', '3 PM : ', '4 PM : ', '5 PM : ', '6 PM : ', '7 PM : ', 'Daily Location Total']
+console.log(hourarray);
+var parentElement = document.getElementById('totaltable');
+var data = document.createElement('article');
+parentElement.appendChild(data);
+var total = 0;
+var table = document.createElement('table');
+data.appendChild(table);
+var tablerow = document.createElement('tr');
+var hourheader = document.createElement('th');
+var cellindex = document.createElement('td');
+var j = 0;
+for (let hour = 0; hour <= hourarray.length; hour++) {
+  hourheader.textContent = hourarray[hour];
+  console.log(table.appendChild(hourheader));
 }
-var limaobject = {location :'Lima', 'min-cast' : 2,
-arr:[],
-'max-cust':16,'Avg Cookie /Sales':4.6,getRandomInt :function () {
-    let min = Math.ceil(this['min-cast']);
-    let max = Math.floor(this['max-cust']);
-    return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
+for (let i = 0; i < hourarray.length; i++) {
+  tablerow.textContent = hourarray[i];
+  console.log(tablerow.textContent = hourarray[i]);
+  for (j = 0; j < avgarray.length; j++) {
+    console.log(cellindex.textContent = avgarray[j]);
+    total = +avgarray[j];
   }
-  ,avgrandom : function (){
-    return this["Avg Cookie /Sales"]*this.getRandomInt() ;
+  avgarray[j - 1] = total;
 }
-}
+Store.prototype.renderstore =function (){
 
-var list= [seattleobject,tokyoobject,dubaieobject,parisobject,limaobject];
-var hournum =[6,7,8,9,10,11,12,1,2,3,4,5,6,7]
-var total=0
-console.log(list);
-console.log(hournum);
-let ul = document.getElementById('list');
-
-for(let j=0;j<list.length;j++){
-  var par = document.createElement("P");               
-par.innerText = "This is the Avg cookie  "+list[j].location;               
-document.body.appendChild(par);
-for(let i=0;i<hournum.length;i++){
-    // var h2= document.createElement('h2')
-var listhour = document.createElement('li');
-let val = Math.round(list[j].avgrandom());
-let p = document.createElement('p')
-// parentElement.appendChild(p);
-//  par.textContent =list[i].location;
-
-// h2.textContent =list[i].Location;
-
-listhour.textContent = val;
-console.log(val)
-ul.appendChild(listhour);total=[]
-// break;
-}
 }
