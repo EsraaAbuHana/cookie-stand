@@ -36,7 +36,7 @@ for (let hour = 0; hour <= hourarray.length; hour++) {
 }}
 
 var filltable=function(){
-for (i = 0; i <= citynamearray.length; i++) {
+for (i = 0; i < citynamearray.length -1; i++) {
   var tablerow = document.createElement('tr');
   table.appendChild(tablerow);
   for (j = 0; j <= hourarray.length; j++) {
@@ -59,21 +59,16 @@ filltable();
 ///////lab09
 /////////////
 var addnewLocation = document.getElementById('addnewlocation');
-
+var newtotal = 0;
 addnewLocation.addEventListener('submit', function (event) {
-  event.preventDefult();
+  event.preventDefault();
   var newlocationname = event.target.location.value;
-  var newMin = event.target.Min.value;
-  var newMax = event.target.Max.value;
-  var newAvg = event.target.Avg.value;
+  var newMin =Number(event.target.Min.value);
+  var newMax =Number(event.target.Max.value);
+  var newAvg =Number(event.target.Avg.value);
+  console.log(newlocationname,newMin,newMax,newAvg);
   var newlocation = new Store(newlocationname, newMin, newMax, newAvg);
-  console.log(newavgTotal);
-  newlocation.filltable();
-});
-  var tablenewrow = document.createElement('tr');
-  table.appendChild(tablenewrow);
-  var newtotal = 0;
-  for (let j = 0; j <= hourarray.length; j++) {
+  for (let j = 0; j < hourarray.length; j++) {
     var newavgranperhour = newlocation.avgRandom();
     var cellindex = document.createElement('td');
     cellindex.textContent = newavgranperhour;
@@ -81,13 +76,17 @@ addnewLocation.addEventListener('submit', function (event) {
     console.log('total =' + newtotal);
     cellindex.textContent = newtotal;
   }
-consol.log(newlocationname.avgRandom());
-console.log(addnewLocation());
-console.log(seattle);
-console.log(seattle.avgvalue);
-console.log(tokyoo.avgvalue);
-console.log(seattle.avgRandom());
-console.log(hourarray);
-seattle.avgRandom();
+  // console.log(newavgTotal);
+  filltable();
+});
+  var tablenewrow = document.createElement('tr');
+  table.appendChild(tablenewrow);
 
-
+// consol.log(newlocationname.avgRandom());
+// console.log(addnewLocation());
+// console.log(seattle);
+// console.log(seattle.avgvalue);
+// console.log(tokyoo.avgvalue);
+// console.log(seattle.avgRandom());
+// console.log(hourarray);
+// seattle.avgRandom();
