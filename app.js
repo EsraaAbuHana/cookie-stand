@@ -5,6 +5,7 @@ var dubai = new Store('Dubai', 38, 11, 3.7);
 var lima = new Store('Lima', 2, 16, 4.6);
 var paris = new Store('Paris', 20, 38, 2.3);
 var newinput = new Store()
+var totalperhour=['Total'];
 var citynamearray = [seattle, tokyoo, dubai, lima, paris, 'Total'];
 var hourarray = ['Location', '6 AM :', '7 AM :', '8 AM :', '9 AM :', '10 AM :', '11 AM :', '12 PM :', '1 PM :', '2 PM :', '3 PM :', '4 PM :', '5 PM :', '6 PM :', '7 PM :', 'Daily Location Total']
 var loc = ['Seattle', '', 'Tokyoo', '', 'Dubai', '', 'Lima', '', 'Paris', '', 'Total'];
@@ -36,31 +37,51 @@ for (let hour = 0; hour <= hourarray.length; hour++) {
 }}
 
 var filltable=function(){
-for (i = 0; i < citynamearray.length -1; i++) {
-  var tablerow = document.createElement('tr');
-  table.appendChild(tablerow);
-  for (j = 0; j <= hourarray.length; j++) {
-    var avgranperhour = citynamearray[i].avgRandom();
-    var cellindex = document.createElement('td');
-    cellindex.textContent = avgranperhour;
-    if (j == 0) { cellindex.textContent = loc[s]; tablerow.appendChild(cellindex); j++; s++; } else {
-      tablerow.appendChild(cellindex);
-      console.log(cellindex.textContent);
-    }
-    total += avgranperhour;
-    console.log('total =' + total);
+  for (let i = 0; i < citynamearray.length -1; i++) {
+    total = 0;
+    var lastvar = 0
+    var tablerow = document.createElement('tr');
+    table.appendChild(tablerow);
+    for (let j = 0; j <= hourarray.length -1; j++) {
+      var cellindex = document.createElement('td');
+      if (j == 0) {
+        console.log(citynamearray[i].location);
+        cellindex.textContent = citynamearray[i].location; 
+        tablerow.appendChild(cellindex);} 
+        else {
+        var avgranperhour = citynamearray[i].avgRandom();
+        cellindex.textContent = avgranperhour;
+        tablerow.appendChild(cellindex);
+        total += avgranperhour;
+        totalperhour[j] = (totalperhour[j]  || 0) + avgranperhour;
+        lastvar = avgranperhour;
+        console.log('total =' + total);
+      };
+    };
+    totalperhour[totalperhour.length -1] = totalperhour[totalperhour.length -1] + total - lastvar;
+    console.log('total ='+totalperhour);
+    cellindex.textContent = total;
   }
-  s++;
-  cellindex.textContent = total;
-}
-}
+  }
+  var fillfooter=function(){
+    var footer =document.createElement('tfoot');
+    var footerrow = document.createElement('tr');
+   
+    for (let hour = 0; hour <totalperhour.length; hour++) {
+      var footerindex = document.createElement('td');
+      footerindex.textContent=totalperhour[hour];
+      footerrow.appendChild(footerindex);
+    }
+  footer.appendChild(footerrow);
+table.appendChild(footer);}
 fillheader();
 filltable();
-///////lab09
-/////////////
+fillfooter();
+////////////////////lab09
 var addnewLocation = document.getElementById('addnewlocation');
 var newtotal = 0;
 addnewLocation.addEventListener('submit', function (event) {
+  var newtotal = 0;
   event.preventDefault();
   var newlocationname = event.target.location.value;
   var newMin =Number(event.target.Min.value);
@@ -68,20 +89,31 @@ addnewLocation.addEventListener('submit', function (event) {
   var newAvg =Number(event.target.Avg.value);
   console.log(newlocationname,newMin,newMax,newAvg);
   var newlocation = new Store(newlocationname, newMin, newMax, newAvg);
+  var tr = document.createElement('tr');
   for (let j = 0; j < hourarray.length; j++) {
-    var newavgranperhour = newlocation.avgRandom();
     var cellindex = document.createElement('td');
-    cellindex.textContent = newavgranperhour;
-    newtotal += newavgranperhour;
-    console.log('total =' + newtotal);
-    cellindex.textContent = newtotal;
-  }
-  // console.log(newavgTotal);
-  filltable();
+    if(j === 0){
+      cellindex.textContent = newlocation.location;
+    }else{
+      var newavgranperhour = newlocation.avgRandom();
+      cellindex.textContent = newavgranperhour;
+      totalperhour[i+1] = totalperhour[i+1] + newavgranperhour;
+      newtotal += newavgranperhour;
+    }
+    tr.appendChild(cellindex);
+  };
+  totalperhour[totalperhour.length -1] =  totalperhour[totalperhour.length -1] + newtotal;
+  cellindex.textContent = newtotal;
+  tr.appendChild(cellindex);
+  table.appendChild(tr);
+  table.deleteTFoot();
+  fillfooter();
 });
-  var tablenewrow = document.createElement('tr');
-  table.appendChild(tablenewrow);
-
+// // console.log('total =' + newtotal);
+  // var tablenewrow = document.createElement('tr');
+  // table.appendChild(tablenewrow);
+// filltable();
+// console.log(newavgTotal);
 // consol.log(newlocationname.avgRandom());
 // console.log(addnewLocation());
 // console.log(seattle);
@@ -90,3 +122,5 @@ addnewLocation.addEventListener('submit', function (event) {
 // console.log(seattle.avgRandom());
 // console.log(hourarray);
 // seattle.avgRandom();
+ // <tfoot>
+  // </tfoot>
